@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Benim Müşterilerim{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Benim Müşterilerim</h2>
+  
+  <!-- Filtreleme Formu -->
+  <form method="get" class="mb-4">
+    <div class="row">
+      <div class="col-md-3">
+        <input type="text" name="username" class="form-control" placeholder="Müşteri Kullanıcı Adı" value="{{ request.GET.username }}">
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="first_name" class="form-control" placeholder="Ad" value="{{ request.GET.first_name }}">
+      </div>
+      <div class="col-md-3">
+        <select name="subscription_type" class="form-select">
+          <option value="">Abonelik Türü Seçiniz</option>
+          {% for st in subscription_types %}
+          <option value="{{ st.id }}" {% if request.GET.subscription_type == st.id|stringformat:"s" %}selected{% endif %}>{{ st.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <select name="agreement_status" class="form-select">
+          <option value="">Anlaşma Durumu</option>
+          <option value="olumlu" {% if request.GET.agreement_status == "olumlu" %}selected{% endif %}>Olumlu</option>
+          <option value="olumsuz" {% if request.GET.agreement_status == "olumsuz" %}selected{% endif %}>Olumsuz</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-corporate mt-3">Filtrele</button>
+  </form>
+  
+  <!-- Müşteri Listesi Tablosu -->
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Kullanıcı Adı</th>
+        <th>Ad</th>
+        <th>Soyad</th>
+        <th>Abonelik Türü</th>
+        <th>Anlaşma Durumu</th>
+        <th>Oluşturulma Tarihi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for customer in customers %}
+      <tr>
+        <td>{{ customer.username }}</td>
+        <td>{{ customer.first_name }}</td>
+        <td>{{ customer.last_name }}</td>
+        <td>{{ customer.subscription_type.name }}</td>
+        <td>{{ customer.get_agreement_status_display }}</td>
+        <td>{{ customer.created_at|date:"Y-m-d" }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6">Hiç müşteri bulunamadı.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

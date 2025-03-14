@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Malzeme Dağıtım İşlemi{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-truck me-2"></i>Malzeme Dağıtım İşlemi</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Malzeme Alanı (Select) -->
+        <div class="mb-3">
+          <label class="form-label" for="id_material">Malzeme Seçiniz</label>
+          <select
+            id="id_material"
+            name="{{ form.material.html_name }}"
+            class="form-control"
+          >
+            <!-- Malzemeleri form.material.field.choices üzerinden basacağız -->
+            {% for option in form.material.field.choices %}
+              {% comment %} option = (value, label) {% endcomment %}
+              {% if option.0 == form.material.value %}
+                <option value="{{ option.0 }}" selected>{{ option.1 }}</option>
+              {% else %}
+                <option value="{{ option.0 }}">{{ option.1 }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+          {% for error in form.material.errors %}
+            <div class="text-danger">{{ error }}</div>
+          {% endfor %}
+        </div>
+        
+        <!-- Müşteri Alanı (Select) -->
+        <div class="mb-3">
+          <label class="form-label" for="id_customer">Müşteri Seçiniz</label>
+          <select
+            id="id_customer"
+            name="{{ form.customer.html_name }}"
+            class="form-control"
+          >
+            {% for option in form.customer.field.choices %}
+              {% if option.0 == form.customer.value %}
+                <option value="{{ option.0 }}" selected>{{ option.1 }}</option>
+              {% else %}
+                <option value="{{ option.0 }}">{{ option.1 }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+          {% for error in form.customer.errors %}
+            <div class="text-danger">{{ error }}</div>
+          {% endfor %}
+        </div>
+        
+        <!-- Verilen Adet -->
+        <div class="mb-3">
+          <label class="form-label" for="id_quantity">Verilen Adet</label>
+          <input
+            type="number"
+            id="id_quantity"
+            name="{{ form.quantity.html_name }}"
+            class="form-control"
+            placeholder="Verilecek adet"
+            value="{{ form.quantity.value|default_if_none:'' }}"
+          />
+          {% for error in form.quantity.errors %}
+            <div class="text-danger">{{ error }}</div>
+          {% endfor %}
+        </div>
+        
+        <!-- Not -->
+        <div class="mb-3">
+          <label class="form-label" for="id_note">Not (Opsiyonel)</label>
+          <textarea
+            id="id_note"
+            name="{{ form.note.html_name }}"
+            class="form-control"
+            rows="3"
+            placeholder="Ek bilgi"
+          >{{ form.note.value|default_if_none:'' }}</textarea>
+          {% for error in form.note.errors %}
+            <div class="text-danger">{{ error }}</div>
+          {% endfor %}
+        </div>
+        
+        <button type="submit" class="btn btn-corporate">İşlemi Kaydet</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

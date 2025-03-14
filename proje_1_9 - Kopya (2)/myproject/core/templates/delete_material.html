@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Malzeme Sil{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-trash me-2"></i>Malzeme Sil</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <p><strong>{{ material.name }}</strong> malzemesini silmek istediğinize emin misiniz?</p>
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Evet, Sil</button>
+        <a href="{% url 'list_materials' %}" class="btn btn-secondary">Vazgeç</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Çalışan Listesi{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Çalışan Listesi</h2>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Ad</th>
+        <th>Soyad</th>
+        <th>Departman</th>
+        <th>Belgeler</th>
+        <th>İşlemler</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for employee in employees %}
+      <tr>
+        <td>{{ employee.first_name }}</td>
+        <td>{{ employee.last_name }}</td>
+        <td>{{ employee.department }}</td>
+        <td>
+          {% for doc in employee.documents.all %}
+            {{ doc.document_name }}<br>
+          {% empty %}
+            Hiç belge yok.
+          {% endfor %}
+        </td>
+        <td>
+          <a href="{% url 'add_employee_document' employee.id %}" class="btn btn-info btn-sm">Belge Ekle</a>
+          <a href="{% url 'list_employee_documents' employee.id %}" class="btn btn-secondary btn-sm">Belgeler</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">Hiç çalışan bulunamadı.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

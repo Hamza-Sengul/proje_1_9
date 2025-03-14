@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Tüm Extralar{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-plus-circle me-2"></i>Extra Listesi (Yönetici)</h2>
+  </div>
+
+  <!-- Filtre Formu -->
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+      <input type="text" name="name" class="form-control" placeholder="Extra Adı" value="{{ request.GET.name }}">
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="customer" class="form-control" placeholder="Müşteri" value="{{ request.GET.customer }}">
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="rep" class="form-control" placeholder="Temsilci" value="{{ request.GET.rep }}">
+    </div>
+    <div class="col-md-3">
+      <select name="status" class="form-select">
+        <option value="">Durum</option>
+        <option value="active" {% if request.GET.status == 'active' %}selected{% endif %}>Aktif</option>
+        <option value="canceled" {% if request.GET.status == 'canceled' %}selected{% endif %}>İptal</option>
+      </select>
+    </div>
+    <div class="col-md-3 d-flex align-items-center">
+      <label class="me-2 mb-0">Kayıt Tarihi:</label>
+    </div>
+    <div class="col-md-3">
+      <input type="date" name="date_from" class="form-control" value="{{ request.GET.date_from }}">
+    </div>
+    <div class="col-md-3">
+      <input type="date" name="date_to" class="form-control" value="{{ request.GET.date_to }}">
+    </div>
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-corporate w-100">Filtre</button>
+    </div>
+  </form>
+
+  <!-- Extra Listesi -->
+  <div class="row">
+    {% for e in extras %}
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-header">
+            <strong>{{ e.name }}</strong> - {{ e.get_status_display }}
+          </div>
+          <div class="card-body">
+            <p><strong>Temsilci:</strong> {% if e.rep %}{{ e.rep.username }}{% endif %}</p>
+            <p><strong>Fiyat:</strong> {{ e.price }}</p>
+            <p><strong>Müşteri:</strong> {{ e.customer.username }}</p>
+            <p><strong>Oluşturma Tarihi:</strong> {{ e.created_at|date:"Y-m-d H:i" }}</p>
+            {% if e.status == 'active' %}
+              <a href="{% url 'cancel_subscription_extra' e.id %}" class="btn btn-danger btn-sm">
+                İptal Et
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>Hiç extra bulunamadı.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

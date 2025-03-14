@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Temsilci Girişi{% endblock %}
+
+{% comment %}
+Login sayfasında navbar ve sidebar görünmesin diye ilgili blokları boş bırakıyoruz.
+{% endcomment %}
+{% block navbar %}{% endblock %}
+{% block sidebar %}{% endblock %}
+
+{% block main %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background: linear-gradient(135deg, #e6f0ff, #ffffff);">
+  <div class="card shadow-lg" style="width: 400px; max-width: 90%;">
+    <div class="card-header text-center" style="background: linear-gradient(to right, var(--primary-dark), var(--primary-color)); color: white; border-radius: 5px 5px 0 0;">
+      <h3 class="my-2"><i class="bi bi-building me-2"></i>Temsilci Girişi</h3>
+    </div>
+    <div class="card-body p-4">
+      <div class="text-center mb-4">
+        <i class="bi bi-person-circle" style="font-size: 3rem; color: var(--primary-color);"></i>
+      </div>
+      
+      <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+          <label for="{{ form.username.id_for_label }}" class="form-label">Kullanıcı Adı</label>
+          {{ form.username }}
+        </div>
+        
+        <div class="mb-3">
+          <label for="{{ form.password.id_for_label }}" class="form-label">Şifre</label>
+          {{ form.password }}
+        </div>
+        
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>Kullanıcı adı veya şifre hatalı!
+        </div>
+        {% endif %}
+        
+        <div class="d-grid gap-2 mt-4">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yap
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer bg-light text-center py-3">
+      <small class="text-muted">Şifrenizi unuttuysanız yöneticinizle iletişime geçiniz.</small>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Form alanlarına bootstrap sınıflarını eklemek için
+  document.addEventListener('DOMContentLoaded', function() {
+    var usernameField = document.getElementById('{{ form.username.id_for_label }}');
+    var passwordField = document.getElementById('{{ form.password.id_for_label }}');
+    
+    if (usernameField) {
+      usernameField.classList.add('form-control');
+      usernameField.placeholder = 'Kullanıcı adınızı girin';
+    }
+    
+    if (passwordField) {
+      passwordField.classList.add('form-control');
+      passwordField.placeholder = 'Şifrenizi girin';
+    }
+  });
+</script>
+{% endblock %}

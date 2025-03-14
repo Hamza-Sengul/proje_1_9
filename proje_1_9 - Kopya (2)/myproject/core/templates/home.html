@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Ana Sayfa{% endblock %}
+{% block navbar %}{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block main %}
+    <!-- İçerik alanı sadece content kısmını içeriyor -->
+    <div class="content">
+      <div class="text-center">
+          <h1>Hoşgeldiniz</h1>
+          <div class="mt-4">
+              <a href="{% url 'admin_login' %}" class="btn btn-corporate btn-lg m-2">Yönetici Girişi</a>
+              <a href="{% url 'temsilci_login' %}" class="btn btn-corporate btn-lg m-2">Temsilci Girişi</a>
+          </div>
+      </div>
+      {% block content %}{% endblock %}
+    </div>
+{% endblock %}

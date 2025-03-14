@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Tüm Araçlar{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-truck me-2"></i>Araç Listesi (Yönetici)</h2>
+  </div>
+
+  <!-- Filtre Formu -->
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+      <input type="text" name="brand" class="form-control" placeholder="Marka" value="{{ request.GET.brand }}">
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="model" class="form-control" placeholder="Model" value="{{ request.GET.model }}">
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="chassis_no" class="form-control" placeholder="Şasi No" value="{{ request.GET.chassis_no }}">
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="rep" class="form-control" placeholder="Temsilci" value="{{ request.GET.rep }}">
+    </div>
+    <div class="col-md-3 d-flex align-items-center">
+      <label class="me-2 mb-0">Kayıt Tarihi:</label>
+    </div>
+    <div class="col-md-3">
+      <input type="date" name="date_from" class="form-control" placeholder="Başlangıç" value="{{ request.GET.date_from }}">
+    </div>
+    <div class="col-md-3">
+      <input type="date" name="date_to" class="form-control" placeholder="Bitiş" value="{{ request.GET.date_to }}">
+    </div>
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-corporate w-100">Filtre</button>
+    </div>
+  </form>
+
+  <!-- Araç Listesi -->
+  <div class="row">
+    {% for v in vehicles %}
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-header">
+            <strong>{{ v.brand }} {{ v.model }}</strong> ({{ v.chassis_no }})
+          </div>
+          <div class="card-body">
+            <p><strong>Temsilci:</strong> {% if v.rep %}{{ v.rep.username }}{% else %}-{% endif %}</p>
+            <p><strong>Bakım Fiyatı:</strong> {{ v.maintenance_price }}</p>
+            <p><strong>Son Bakım Tarihi:</strong> {{ v.last_maintenance_date|date:"Y-m-d" }}</p>
+            <p><strong>Tahmini Bakım Zamanı:</strong> {{ v.estimated_maintenance_date|date:"Y-m-d" }}</p>
+            <p><strong>Eklenme Tarihi:</strong> {{ v.created_at|date:"Y-m-d H:i" }}</p>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>Araç kaydı bulunamadı.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Uygulama{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #1a5f9c;
+            --primary-light: #2d7cc0;
+            --primary-lighter: #5298d8;
+            --primary-dark: #0e4173;
+            --accent-color: #3498db;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --background-light: #f8f9fa;
+            --border-color: #e2e8f0;
+        }
+        
+        body { 
+            background-color: var(--background-light); 
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+        
+        .btn-corporate { 
+            background-color: var(--primary-color); 
+            color: var(--text-light); 
+            border: none; 
+            transition: all 0.3s ease;
+        }
+        
+        .btn-corporate:hover {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+        }
+        
+        .navbar { 
+            background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.4rem;
+        }
+        
+        /* Sol navbar (sidebar) ayarları */
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background-color: #ffffff;
+            border-right: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+            box-shadow: 1px 0 3px rgba(0,0,0,0.05);
+        }
+        
+        .sidebar.collapsed {
+            width: 80px;
+        }
+        
+        .sidebar .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.7rem 1rem;
+            color: var(--text-dark);
+            border-left: 4px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: rgba(45, 124, 192, 0.1);
+            border-left: 4px solid var(--primary-lighter);
+            color: var(--primary-color);
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: rgba(45, 124, 192, 0.1);
+            border-left: 4px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .sidebar .nav-link i {
+            font-size: 1.1rem;
+            min-width: 24px;
+            color: var(--primary-color);
+        }
+        
+        .sidebar .nav-link .link-text {
+            margin-left: 10px;
+            transition: opacity 0.3s;
+        }
+        
+        .sidebar.collapsed .nav-link .link-text {
+            opacity: 0;
+            display: none;
+        }
+        
+        .toggle-btn {
+            width: 100%;
+            border: none;
+            background: none;
+            text-align: left;
+            padding: 0.5rem 1rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        
+        .toggle-btn:hover {
+            color: var(--primary-dark);
+        }
+        
+        .toggle-btn .link-text {
+            margin-left: 10px;
+            font-weight: 500;
+        }
+        
+        .sidebar.collapsed .toggle-btn .link-text {
+            display: none;
+        }
+        
+        .content {
+            flex-grow: 1;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .wrapper {
+            display: flex;
+        }
+        
+        /* Card tasarımları */
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: none;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--primary-light), var(--primary-lighter));
+            color: var(--text-light);
+            border-bottom: none;
+            border-radius: 8px 8px 0 0 !important;
+            font-weight: 500;
+        }
+        
+        /* Buton stilleri */
+        .btn {
+            border-radius: 6px;
+            padding: 0.5rem 1.25rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background-color: #bb2d3b;
+            border-color: #bb2d3b;
+        }
+        
+        /* Responsive ayarlamalar */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .sidebar .nav-link .link-text {
+                display: none;
+            }
+            
+            .sidebar .toggle-btn .link-text {
+                display: none;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+        }
+        
+        /* Page Header */
+        .page-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .page-header h2 {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar Bloğu -->
+    {% block navbar %}
+    <nav class="navbar navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="bi bi-building me-2"></i>Uygulama
+        </a>
+      </div>
+    </nav>
+    {% endblock %}
+    
+    <!-- Main İçerik Alanı: Sidebar ve Content -->
+    {% block main %}
+    <div class="wrapper">
+        <!-- Sidebar Bloğu -->
+        {% block sidebar %}
+        <div id="sidebar" class="sidebar">
+          <!-- Toggle Butonu -->
+          <button id="toggle-btn" class="toggle-btn" onclick="toggleSidebar()">
+            <i class="bi bi-list"></i>
+            <span class="link-text"> Menü</span>
+          </button>
+          <ul class="nav flex-column">
+            {% if request.user.is_authenticated %}
+              {% if request.user.is_superuser %}
+                <!-- Yönetici Menüsü -->
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'admin_panel' %}active{% endif %}" href="{% url 'admin_panel' %}">
+                    <i class="bi bi-speedometer2"></i>
+                    <span class="link-text">Panel</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'add_temsilci' %}active{% endif %}" href="{% url 'add_temsilci' %}">
+                    <i class="bi bi-person-plus"></i>
+                    <span class="link-text">Temsilci Ekle</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_temsilci' %}active{% endif %}" href="{% url 'list_temsilci' %}">
+                    <i class="bi bi-list-ul"></i>
+                    <span class="link-text">Temsilcileri Listele</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'add_expense_category' %}active{% endif %}" href="{% url 'add_expense_category' %}">
+                    <i class="bi bi-plus-circle"></i>
+                    <span class="link-text">Kategori Ekle</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_expense_categories' %}active{% endif %}" href="{% url 'list_expense_categories' %}">
+                    <i class="bi bi-list-ul"></i>
+                    <span class="link-text">Kategoriler</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'expense_category_logs' %}active{% endif %}" href="{% url 'expense_category_logs' %}">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span class="link-text">Kategori Logları</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_expenses_admin' %}active{% endif %}" href="{% url 'list_expenses_admin' %}">
+                    <i class="bi bi-cash-stack"></i>
+                    <span class="link-text">Harcamaları Listele</span>
+                  </a>
+                </li>
+                <!-- Abonelik İşlemleri -->
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'add_subscription_type' %}active{% endif %}" href="{% url 'add_subscription_type' %}">
+                    <i class="bi bi-plus-circle"></i>
+                    <span class="link-text">Abonelik Türü Ekle</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_subscription_types' %}active{% endif %}" href="{% url 'list_subscription_types' %}">
+                    <i class="bi bi-list-ul"></i>
+                    <span class="link-text">Abonelik Türleri</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'add_subscription_duration' %}active{% endif %}" href="{% url 'add_subscription_duration' %}">
+                    <i class="bi bi-plus-circle"></i>
+                    <span class="link-text">Abonelik Süresi Ekle</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_subscription_durations' %}active{% endif %}" href="{% url 'list_subscription_durations' %}">
+                    <i class="bi bi-list-ul"></i>
+                    <span class="link-text">Abonelik Süreleri</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'add_payment_type' %}active{% endif %}" href="{% url 'add_payment_type' %}">
+                    <i class="bi bi-plus-circle"></i>
+                    <span class="link-text">Ödeme Tipi Ekle</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_payment_types' %}active{% endif %}" href="{% url 'list_payment_types' %}">
+                    <i class="bi bi-list-ul"></i>
+                    <span class="link-text">Ödeme Tipleri</span>
+                  </a>
+                </li>
+                <!-- Çalışan Yönetimi -->
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'add_employee' %}active{% endif %}" href="{% url 'add_employee' %}">
+                    <i class="bi bi-person-plus"></i>
+                    <span class="link-text">Çalışan Ekle</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_employees_admin' %}active{% endif %}" href="{% url 'list_employees_admin' %}">
+                    <i class="bi bi-people"></i>
+                    <span class="link-text">Çalışan Listesi</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_employee_tasks' %}active{% endif %}" href="{% url 'list_employee_tasks' %}">
+                    <i class="bi bi-list-ul"></i>
+                    <span class="link-text">Çalışan Görevleri</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_employee_task_logs' %}active{% endif %}" href="{% url 'list_employee_task_logs' %}">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span class="link-text">Görev Logları</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'add_material' %}active{% endif %}" href="{% url 'add_material' %}">
+                    <i class="bi bi-box-seam"></i>
+                    <span class="link-text">Malzeme Ekle</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_materials' %}active{% endif %}" href="{% url 'list_materials' %}">
+                    <i class="bi bi-list-ul"></i>
+                    <span class="link-text">Malzeme Listesi</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_material_transactions_admin' %}active{% endif %}" href="{% url 'list_material_transactions_admin' %}">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span class="link-text">Malzeme İşlemleri</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.resolver_match.url_name == 'list_payments_admin' %}active{% endif %}" href="{% url 'list_payments_admin' %}">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span class="link-text">Tahsilatlar</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'list_complaints_admin' %}">
+                    <i class="bi bi-exclamation-circle"></i>
+                    <span class="link-text">Şikayetler</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'list_requests_admin' %}">
+                    <i class="bi bi-lightbulb"></i>
+                    <span class="link-text">İstekler</span>
+                  </a>
+                </li>
+                <!-- Yönetici Navbar -->
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'list_vehicles_admin' %}">
+    <i class="bi bi-truck"></i>
+    <span class="link-text">Araç Listesi</span>
+  </a>
+</li>
+
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'list_subscription_extras_admin' %}">
+    <i class="bi bi-plus-circle"></i>
+    <span class="link-text">Tüm Extralar</span>
+  </a>
+</li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'admin_logout' %}">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="link-text">Çıkış Yap</span>
+                  </a>
+                </li>
+              {% else %}
+                <!-- Temsilci Menüsü -->
+                
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'temsilci_panel' %}active{% endif %}" href="{% url 'temsilci_panel' %}">
+                        <i class="bi bi-speedometer2"></i>
+                        <span class="link-text">Panel</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'list_employees_for_rep' %}active{% endif %}" href="{% url 'list_employees_for_rep' %}">
+                        <i class="bi bi-people"></i>
+                        <span class="link-text">Çalışanlarım</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'add_expense' %}active{% endif %}" href="{% url 'add_expense' %}">
+                        <i class="bi bi-cash-stack"></i>
+                        <span class="link-text">Harcama Ekle</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'list_expenses_rep' %}active{% endif %}" href="{% url 'list_expenses_rep' %}">
+                        <i class="bi bi-list-ul"></i>
+                        <span class="link-text">Benim Harcamalarım</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'add_customer' %}active{% endif %}" href="{% url 'add_customer' %}">
+                        <i class="bi bi-person-plus"></i>
+                        <span class="link-text">Müşteri Ekle</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'list_customers_rep' %}active{% endif %}" href="{% url 'list_customers_rep' %}">
+                        <i class="bi bi-list-ul"></i>
+                        <span class="link-text">Benim Müşterilerim</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'list_pending_customers' %}active{% endif %}" href="{% url 'list_pending_customers' %}">
+                        <i class="bi bi-exclamation-circle"></i>
+                        <span class="link-text">Bekleyen Müşteriler</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'add_material_transaction' %}active{% endif %}" href="{% url 'add_material_transaction' %}">
+                        <i class="bi bi-plus-circle"></i>
+                        <span class="link-text">Malzeme İşlemi Ekle</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'list_material_transactions_for_rep' %}active{% endif %}" href="{% url 'list_material_transactions_for_rep' %}">
+                        <i class="bi bi-file-earmark-text"></i>
+                        <span class="link-text">Malzeme İşlemlerim</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'add_payment' %}active{% endif %}" href="{% url 'add_payment' %}">
+                        <i class="bi bi-plus-circle"></i>
+                        <span class="link-text">Tahsilat Ekle</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {% if request.resolver_match.url_name == 'list_payments_rep' %}active{% endif %}" href="{% url 'list_payments_rep' %}">
+                        <i class="bi bi-file-earmark-text"></i>
+                        <span class="link-text">Tahsilatlarım</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'list_complaints_rep' %}">
+                        <i class="bi bi-exclamation-circle"></i>
+                        <span class="link-text">Şikayetlerim</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'list_requests_rep' %}">
+                        <i class="bi bi-lightbulb"></i>
+                        <span class="link-text">İsteklerim</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'add_complaint' %}">
+                        <i class="bi bi-plus-circle"></i>
+                        <span class="link-text">Şikayet Ekle</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'add_request' %}">
+                        <i class="bi bi-plus-circle"></i>
+                        <span class="link-text">İstek Ekle</span>
+                      </a>
+                    </li>
+                    <!-- Temsilci Navbar -->
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'list_vehicles_rep' %}">
+    <i class="bi bi-truck"></i>
+    <span class="link-text">Araçlarım</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'add_vehicle' %}">
+    <i class="bi bi-plus-circle"></i>
+    <span class="link-text">Araç Ekle</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'list_subscription_extras_rep' %}">
+    <i class="bi bi-plus-circle"></i>
+    <span class="link-text">Extralarım</span>
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'add_subscription_extra' %}">
+    <i class="bi bi-plus-circle"></i>
+    <span class="link-text">Extra Ekle</span>
+  </a>
+</li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'temsilci_logout' %}">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span class="link-text">Çıkış Yap</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endif %}
+              </ul>
+            </div>
+            {% endblock %}
+            
+            <!-- İçerik Bloğu -->
+            <div class="content">
+              {% block content %}{% endblock %}
+            </div>
+        </div>
+        {% endblock %}
+        
+        <script>
+          function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("collapsed");
+          }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>

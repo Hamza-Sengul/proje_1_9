@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Tüm İstekler{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-lightbulb me-2"></i>İstekler (Yönetici)</h2>
+  </div>
+
+  <!-- Filtre Formu -->
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+      <input type="text" name="name" class="form-control" placeholder="İstek Adı" value="{{ request.GET.name }}">
+    </div>
+    <div class="col-md-3">
+      <input type="date" name="date_from" class="form-control" value="{{ request.GET.date_from }}">
+    </div>
+    <div class="col-md-3">
+      <input type="date" name="date_to" class="form-control" value="{{ request.GET.date_to }}">
+    </div>
+    <div class="col-md-3">
+      <!-- Temsilci araması -->
+      <input type="text" name="rep" class="form-control" placeholder="Temsilci" value="{{ request.GET.rep }}">
+    </div>
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-corporate w-100">Filtre</button>
+    </div>
+  </form>
+
+  <!-- İstek Listesi -->
+  <div class="row">
+    {% for r in reqs %}
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-header">
+            <strong>{{ r.name }}</strong>
+          </div>
+          <div class="card-body">
+            <p><strong>Temsilci:</strong> {% if r.rep %}{{ r.rep.username }}{% endif %}</p>
+            <p><strong>Müşteri:</strong> {{ r.customer.username }}</p>
+            <p><strong>Fiyat:</strong> {% if r.price %}{{ r.price }}{% else %}-{% endif %}</p>
+            <p>{{ r.description }}</p>
+            <p><strong>Eklenme Tarihi:</strong> {{ r.created_at|date:"Y-m-d H:i" }}</p>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>İstek kaydı bulunamadı.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

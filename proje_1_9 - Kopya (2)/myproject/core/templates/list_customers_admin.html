@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Müşteri Listesi{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-person-lines-fill me-2"></i>Müşteri Listesi</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <a href="{% url 'add_customer' %}" class="btn btn-corporate mb-3">
+        <i class="bi bi-person-plus me-1"></i>Müşteri Ekle
+      </a>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Temsilci</th>
+            <th>Müşteri Kullanıcı Adı</th>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Abonelik Türü</th>
+            <th>Anlaşma Durumu</th>
+            <th>Oluşturulma Tarihi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for customer in customers %}
+          <tr>
+            <td>{{ customer.rep.username }}</td>
+            <td>{{ customer.username }}</td>
+            <td>{{ customer.first_name }}</td>
+            <td>{{ customer.last_name }}</td>
+            <td>{{ customer.subscription_type.name }}</td>
+            <td>{{ customer.get_agreement_status_display }}</td>
+            <td>{{ customer.created_at|date:"Y-m-d" }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7">Hiç müşteri bulunamadı.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

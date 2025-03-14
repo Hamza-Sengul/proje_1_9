@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Araç Ekle{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-truck me-2"></i>Araç Ekle</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+
+        <!-- Marka -->
+        <div class="mb-3">
+          <label class="form-label" for="id_brand">Marka</label>
+          <input
+            type="text"
+            id="id_brand"
+            name="{{ form.brand.html_name }}"
+            class="form-control"
+            placeholder="Araç markasını giriniz"
+            value="{{ form.brand.value|default_if_none:'' }}"
+          />
+          {% for e in form.brand.errors %}
+            <div class="text-danger">{{ e }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- Model -->
+        <div class="mb-3">
+          <label class="form-label" for="id_model">Model</label>
+          <input
+            type="text"
+            id="id_model"
+            name="{{ form.model.html_name }}"
+            class="form-control"
+            placeholder="Araç modelini giriniz"
+            value="{{ form.model.value|default_if_none:'' }}"
+          />
+          {% for e in form.model.errors %}
+            <div class="text-danger">{{ e }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- Şasi No -->
+        <div class="mb-3">
+          <label class="form-label" for="id_chassis_no">Şasi No</label>
+          <input
+            type="text"
+            id="id_chassis_no"
+            name="{{ form.chassis_no.html_name }}"
+            class="form-control"
+            placeholder="Araç şasi numarasını giriniz"
+            value="{{ form.chassis_no.value|default_if_none:'' }}"
+          />
+          {% for e in form.chassis_no.errors %}
+            <div class="text-danger">{{ e }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- Bakım Fiyatı -->
+        <div class="mb-3">
+          <label class="form-label" for="id_maintenance_price">Bakım Fiyatı</label>
+          <input
+            type="number"
+            step="0.01"
+            id="id_maintenance_price"
+            name="{{ form.maintenance_price.html_name }}"
+            class="form-control"
+            placeholder="Bakım fiyatını giriniz"
+            value="{{ form.maintenance_price.value|default_if_none:'' }}"
+          />
+          {% for e in form.maintenance_price.errors %}
+            <div class="text-danger">{{ e }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- Son Bakım Tarihi -->
+        <div class="mb-3">
+          <label class="form-label" for="id_last_maintenance_date">Son Bakım Tarihi</label>
+          <input
+            type="date"
+            id="id_last_maintenance_date"
+            name="{{ form.last_maintenance_date.html_name }}"
+            class="form-control"
+            value="{{ form.last_maintenance_date.value|default_if_none:'' }}"
+          />
+          {% for e in form.last_maintenance_date.errors %}
+            <div class="text-danger">{{ e }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- Tahmini Bakım Zamanı -->
+        <div class="mb-3">
+          <label class="form-label" for="id_estimated_maintenance_date">Tahmini Bakım Zamanı</label>
+          <input
+            type="date"
+            id="id_estimated_maintenance_date"
+            name="{{ form.estimated_maintenance_date.html_name }}"
+            class="form-control"
+            value="{{ form.estimated_maintenance_date.value|default_if_none:'' }}"
+          />
+          {% for e in form.estimated_maintenance_date.errors %}
+            <div class="text-danger">{{ e }}</div>
+          {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-corporate">Kaydet</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

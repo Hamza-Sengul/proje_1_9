@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Malzeme Listesi{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-box-seam me-2"></i>Malzeme Listesi</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <a href="{% url 'add_material' %}" class="btn btn-corporate mb-3">
+        <i class="bi bi-plus-circle me-1"></i>Yeni Malzeme Ekle
+      </a>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Malzeme Adı</th>
+            <th>Fiyat</th>
+            <th>Stok</th>
+            <th>Verilebilir</th>
+            <th>Oluşturulma Tarihi</th>
+            <th>İşlemler</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for material in materials %}
+          <tr>
+            <td>{{ material.name }}</td>
+            <td>{{ material.price }}</td>
+            <td>{{ material.quantity }}</td>
+            <td>{% if material.available %}Evet{% else %}Hayır{% endif %}</td>
+            <td>{{ material.created_at|date:"Y-m-d" }}</td>
+            <td>
+              <a href="{% url 'update_material' material.id %}" class="btn btn-warning btn-sm">
+                <i class="bi bi-pencil-square me-1"></i>Güncelle
+              </a>
+              <a href="{% url 'delete_material' material.id %}" class="btn btn-danger btn-sm">
+                <i class="bi bi-trash me-1"></i>Sil
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6">Hiç malzeme bulunamadı.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

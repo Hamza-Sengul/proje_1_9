@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Şikayet Durumu Güncelle{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-pencil-square me-2"></i>Şikayet Durumu Güncelle</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Durum (beklemede, cozuldu, cozulemedi) -->
+        <div class="mb-3">
+          <label class="form-label" for="id_status">Durum</label>
+          <select id="id_status" name="{{ form.status.html_name }}" class="form-control">
+            {% for option in form.status.field.choices %}
+              {% if option.0 == form.status.value %}
+                <option value="{{ option.0 }}" selected>{{ option.1 }}</option>
+              {% else %}
+                <option value="{{ option.0 }}">{{ option.1 }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+          {% for e in form.status.errors %}
+            <div class="text-danger">{{ e }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- cozum_detay -->
+        <div class="mb-3">
+          <label class="form-label" for="id_cozum_detay">Nasıl Çözüldü/Neden Çözülemedi?</label>
+          <textarea
+            id="id_cozum_detay"
+            name="{{ form.cozum_detay.html_name }}"
+            class="form-control"
+            rows="4"
+            placeholder="Çözüldüyse açıklama, çözülemediyse neden?"
+          >{{ form.cozum_detay.value|default_if_none:'' }}</textarea>
+          {% for e in form.cozum_detay.errors %}
+            <div class="text-danger">{{ e }}</div>
+          {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-corporate">Güncelle</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

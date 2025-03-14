@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Şikayet Ekle{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-exclamation-circle me-2"></i>Şikayet Ekle</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Müşteri Seçimi -->
+        <div class="mb-3">
+          <label class="form-label" for="id_customer">Müşteri</label>
+          <select id="id_customer" name="{{ form.customer.html_name }}" class="form-control">
+            <option value="">Seçiniz</option>
+            {% for option in form.customer.field.choices %}
+              {% if option.0 == form.customer.value %}
+                <option value="{{ option.0 }}" selected>{{ option.1 }}</option>
+              {% else %}
+                <option value="{{ option.0 }}">{{ option.1 }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+          {% for e in form.customer.errors %}
+            <div class="text-danger">{{ e }}</div>
+          {% endfor %}
+        </div>
+        
+        <!-- Şikayet Başlığı -->
+        <div class="mb-3">
+          <label class="form-label" for="id_title">Şikayet Başlığı</label>
+          <input
+            type="text"
+            id="id_title"
+            name="{{ form.title.html_name }}"
+            class="form-control"
+            placeholder="Şikayetinizin başlığı"
+            value="{{ form.title.value|default_if_none:'' }}"
+          />
+          {% for e in form.title.errors %}
+            <div class="text-danger">{{ e }}</div>
+          {% endfor %}
+        </div>
+        
+        <!-- Şikayet Açıklaması -->
+        <div class="mb-3">
+          <label class="form-label" for="id_description">Şikayet Açıklaması</label>
+          <textarea
+            id="id_description"
+            name="{{ form.description.html_name }}"
+            class="form-control"
+            rows="4"
+            placeholder="Şikayetinizi detaylıca açıklayınız..."
+          >{{ form.description.value|default_if_none:'' }}</textarea>
+          {% for e in form.description.errors %}
+            <div class="text-danger">{{ e }}</div>
+          {% endfor %}
+        </div>
+        
+        <button type="submit" class="btn btn-corporate">Kaydet</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

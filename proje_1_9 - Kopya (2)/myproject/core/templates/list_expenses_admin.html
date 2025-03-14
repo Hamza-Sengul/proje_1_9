@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Temsilcilerin Harcamalarını Listele{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Temsilcilerin Harcamalarını Listele</h2>
+  
+  <!-- Filtreleme Formu -->
+  <form method="get" class="mb-4">
+    <div class="row">
+      <div class="col-md-3">
+        <input type="text" name="username" class="form-control" placeholder="Temsilci Kullanıcı Adı" value="{{ request.GET.username }}">
+      </div>
+      <div class="col-md-3">
+        <select name="category" class="form-select">
+          <option value="">Kategori Seçiniz</option>
+          {% for cat in categories %}
+            <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <input type="date" name="date_from" class="form-control" placeholder="Başlangıç Tarihi" value="{{ request.GET.date_from }}">
+      </div>
+      <div class="col-md-3">
+        <input type="date" name="date_to" class="form-control" placeholder="Bitiş Tarihi" value="{{ request.GET.date_to }}">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-corporate mt-3">Filtrele</button>
+  </form>
+  
+  <!-- Harcamalar Tablosu -->
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Temsilci</th>
+        <th>Kategori</th>
+        <th>Tutar</th>
+        <th>Açıklama</th>
+        <th>Tarih</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for expense in expenses %}
+      <tr>
+        <td>{{ expense.user.username }}</td>
+        <td>{{ expense.category.name }}</td>
+        <td>{{ expense.amount }}</td>
+        <td>{{ expense.description }}</td>
+        <td>{{ expense.created_at|date:"Y-m-d H:i" }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">Hiç harcama kaydı bulunamadı.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block title %}Yönetici Paneli{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h2><i class="bi bi-gear me-2"></i>Yönetici Paneli</h2>
+</div>
+
+<div class="row">
+  <!-- Temsilci Yönetimi Card -->
+  <div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <i class="bi bi-people me-2"></i>Temsilci Yönetimi
+      </div>
+      <div class="card-body">
+        <p class="card-text">Temsilci ekleme, listeleme ve düzenleme işlemlerini buradan yapabilirsiniz.</p>
+        <div class="d-flex">
+          <a href="{% url 'add_temsilci' %}" class="btn btn-primary me-2">
+            <i class="bi bi-person-plus me-1"></i>Temsilci Ekle
+          </a>
+          <a href="{% url 'list_temsilci' %}" class="btn btn-outline-primary">
+            <i class="bi bi-list-ul me-1"></i>Listele
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Harcama Yönetimi Card -->
+  <div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <i class="bi bi-cash-stack me-2"></i>Harcama Yönetimi
+      </div>
+      <div class="card-body">
+        <p class="card-text">Harcama kategorileri ve harcama kayıtlarını buradan yönetebilirsiniz.</p>
+        <div class="d-flex flex-wrap">
+          <a href="{% url 'add_expense_category' %}" class="btn btn-primary me-2 mb-2">
+            <i class="bi bi-plus-circle me-1"></i>Kategori Ekle
+          </a>
+          <a href="{% url 'list_expenses_admin' %}" class="btn btn-outline-primary me-2 mb-2">
+            <i class="bi bi-list-ul me-1"></i>Harcamaları Listele
+          </a>
+          <!-- Log kayıtlarını da ekleyebilirsiniz -->
+          <a href="{% url 'expense_category_logs' %}" class="btn btn-outline-primary me-2 mb-2">
+            <i class="bi bi-file-earmark-text me-1"></i>Kategori Logları
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Abonelik Yönetimi Card -->
+  <div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <i class="bi bi-calendar-check me-2"></i>Abonelik Yönetimi
+      </div>
+      <div class="card-body">
+        <p class="card-text">Abonelik türleri, süreleri ve ödeme tiplerini yönetebilirsiniz.</p>
+        <div class="d-flex flex-wrap">
+          <a href="{% url 'add_subscription_type' %}" class="btn btn-primary me-2 mb-2">
+            <i class="bi bi-plus-circle me-1"></i>Abonelik Türü Ekle
+          </a>
+          <a href="{% url 'list_subscription_types' %}" class="btn btn-outline-primary me-2 mb-2">
+            <i class="bi bi-list-ul me-1"></i>Abonelik Türleri
+          </a>
+          <a href="{% url 'add_subscription_duration' %}" class="btn btn-primary me-2 mb-2">
+            <i class="bi bi-plus-circle me-1"></i>Abonelik Süresi Ekle
+          </a>
+          <a href="{% url 'list_subscription_durations' %}" class="btn btn-outline-primary me-2 mb-2">
+            <i class="bi bi-list-ul me-1"></i>Abonelik Süreleri
+          </a>
+          <a href="{% url 'add_payment_type' %}" class="btn btn-primary me-2 mb-2">
+            <i class="bi bi-plus-circle me-1"></i>Ödeme Tipi Ekle
+          </a>
+          <a href="{% url 'list_payment_types' %}" class="btn btn-outline-primary me-2 mb-2">
+            <i class="bi bi-list-ul me-1"></i>Ödeme Tipleri
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Çalışan Yönetimi Card -->
+  <div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <i class="bi bi-person-badge me-2"></i>Çalışan Yönetimi
+      </div>
+      <div class="card-body">
+        <p class="card-text">Çalışan ekleme, çalışan listesi, görev atama ve belge yönetimini buradan yapabilirsiniz.</p>
+        <div class="d-flex flex-wrap">
+          <a href="{% url 'add_employee' %}" class="btn btn-primary me-2 mb-2">
+            <i class="bi bi-person-plus me-1"></i>Çalışan Ekle
+          </a>
+          <a href="{% url 'list_employees_admin' %}" class="btn btn-outline-primary me-2 mb-2">
+            <i class="bi bi-people me-1"></i>Çalışan Listesi
+          </a>
+          <!-- Yeni eklemeler: Görev Listele ve Görev Logları -->
+          <a href="{% url 'list_employee_tasks' %}" class="btn btn-outline-primary me-2 mb-2">
+            <i class="bi bi-list-ul me-1"></i>Görevleri Listele
+          </a>
+          <a href="{% url 'list_employee_task_logs' %}" class="btn btn-outline-primary me-2 mb-2">
+            <i class="bi bi-file-earmark-text me-1"></i>Görev Logları
+          </a>
+          <!-- Çalışan belgelerini yönetmek -->
+          <!-- Örneğin, tüm çalışan belgelerini listeleme view'i -->
+         
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Müşteri Yönetimi Card -->
+  <div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <i class="bi bi-person-lines-fill me-2"></i>Müşteri Yönetimi
+      </div>
+      <div class="card-body">
+        <p class="card-text">Temsilcilerin eklediği müşterileri görüntüleyin ve yönetin.</p>
+        <div class="d-flex flex-wrap">
+          <a href="{% url 'add_customer' %}" class="btn btn-primary me-2 mb-2">
+            <i class="bi bi-person-plus me-1"></i>Müşteri Ekle
+          </a>
+          <a href="{% url 'list_customers_admin' %}" class="btn btn-outline-primary me-2 mb-2">
+            <i class="bi bi-list-ul me-1"></i>Müşteri Listesi
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Malzeme Yönetimi Card -->
+  <div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <i class="bi bi-box-seam me-2"></i>Malzeme Yönetimi
+      </div>
+      <div class="card-body">
+        <p class="card-text">Depodaki malzemeleri ve malzeme işlemlerini buradan yönetin.</p>
+        <div class="d-flex flex-wrap">
+          <a href="{% url 'add_material' %}" class="btn btn-primary me-2 mb-2">
+            <i class="bi bi-plus-circle me-1"></i>Malzeme Ekle
+          </a>
+          <a href="{% url 'list_materials' %}" class="btn btn-outline-primary me-2 mb-2">
+            <i class="bi bi-list-ul me-1"></i>Malzeme Listesi
+          </a>
+          <a href="{% url 'list_material_transactions_admin' %}" class="btn btn-outline-primary mb-2">
+            <i class="bi bi-file-earmark-text me-1"></i>Malzeme İşlemleri
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tahsilat Yönetimi Card -->
+  <div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header">
+        <i class="bi bi-credit-card-2-front me-2"></i>Tahsilat Yönetimi
+      </div>
+      <div class="card-body">
+        <p class="card-text">Tüm müşterilerin abonelik ödemelerini (tahsilatları) buradan takip edin.</p>
+        <a href="{% url 'list_payments_admin' %}" class="btn btn-primary">
+          <i class="bi bi-file-earmark-text me-1"></i>Tüm Tahsilatlar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Raporlar Card -->
+  
+
+  <!-- Çıkış Butonu -->
+ 
+</div>
+{% endblock %}

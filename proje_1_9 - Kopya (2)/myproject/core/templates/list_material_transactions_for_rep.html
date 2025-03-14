@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Malzeme İşlemlerim{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-file-earmark-text me-2"></i>Malzeme İşlemlerim</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <a href="{% url 'add_material_transaction' %}" class="btn btn-corporate mb-3">
+        <i class="bi bi-plus-circle me-1"></i>Yeni İşlem
+      </a>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Malzeme</th>
+            <th>Müşteri</th>
+            <th>Adet</th>
+            <th>İşlem Tarihi</th>
+            <th>Not</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transaction in transactions %}
+          <tr>
+            <td>{{ transaction.material.name }}</td>
+            <td>{% if transaction.customer %}{{ transaction.customer.username }}{% else %}-{% endif %}</td>
+            <td>{{ transaction.quantity }}</td>
+            <td>{{ transaction.transaction_date|date:"Y-m-d H:i" }}</td>
+            <td>{{ transaction.note }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5">Hiç işlem bulunamadı.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

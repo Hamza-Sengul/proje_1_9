@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Müşteri Ekle{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h2><i class="bi bi-person-plus me-2"></i>Müşteri Ekle</h2>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <i class="bi bi-pencil-square me-2"></i>Müşteri Bilgileri
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="row">
+        {% for field in form %}
+        <div class="col-md-6 mb-3">
+          <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}
+          <small class="form-text text-muted">{{ field.help_text }}</small>
+          {% endif %}
+          {% if field.errors %}
+          <div class="text-danger">
+            {% for error in field.errors %}
+            <small>{{ error }}</small>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-save me-1"></i>Müşteriyi Kaydet
+        </button>
+        <a href="{% url 'list_customers_rep' %}" class="btn btn-outline-secondary ms-2">
+          <i class="bi bi-x-circle me-1"></i>İptal
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Form alanlarına bootstrap sınıflarını eklemek için
+  document.addEventListener('DOMContentLoaded', function() {
+    var formElements = document.querySelectorAll('form input, form select, form textarea');
+    formElements.forEach(function(element) {
+      element.classList.add('form-control');
+      
+      // Radio ve checkbox elemanları için özel sınıflar
+      if (element.type === 'checkbox') {
+        element.classList.remove('form-control');
+        element.classList.add('form-check-input');
+        // Checkbox etiketini düzenle
+        var parent = element.parentElement;
+        if (parent.tagName.toLowerCase() === 'p') {
+          parent.classList.add('form-check');
+          var label = parent.querySelector('label');
+          if (label) {
+            label.classList.add('form-check-label');
+          }
+        }
+      }
+      
+      if (element.type === 'radio') {
+        element.classList.remove('form-control');
+        element.classList.add('form-check-input');
+      }
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Yönetici Girişi{% endblock %}
+
+{% comment %}
+Login sayfasında navbar ve sidebar görünmesin diye ilgili blokları boş bırakıyoruz.
+{% endcomment %}
+{% block navbar %}{% endblock %}
+{% block sidebar %}{% endblock %}
+
+{% block main %}
+  <div class="content">
+    <h2>Yönetici Girişi</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-corporate">Giriş Yap</button>
+    </form>
+  </div>
+{% endblock %}

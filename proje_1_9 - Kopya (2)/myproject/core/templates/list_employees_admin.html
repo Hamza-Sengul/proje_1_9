@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Çalışan Listesi{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-people me-2"></i>Çalışan Listesi</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <!-- Filtreleme formu eklenebilir -->
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Maaş</th>
+            <th>Departman</th>
+            <th>Oluşturulma Tarihi</th>
+            <th>Eksik Belgeler</th>
+            <th>İşlemler</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for employee in employees %}
+          <tr>
+            <td>{{ employee.first_name }}</td>
+            <td>{{ employee.last_name }}</td>
+            <td>{{ employee.salary }}</td>
+            <td>{{ employee.department }}</td>
+            <td>{{ employee.created_at|date:"Y-m-d" }}</td>
+            <td>
+              {% if employee.missing_docs %}
+                {{ employee.missing_docs|join:", " }}
+              {% else %}
+                Tamam
+              {% endif %}
+            </td>
+            <td>
+              <a href="{% url 'assign_employee_task' employee.id %}" class="btn btn-warning btn-sm">
+                <i class="bi bi-pencil-square me-1"></i>Görev Ata
+              </a>
+              <a href="{% url 'admin_view_employee_documents' employee.id %}" class="btn btn-primary btn-sm">
+                <i class="bi bi-folder2-open me-1"></i>Belgeleri Gör
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7">Hiç çalışan bulunamadı.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Ödeme Tipi Ekle{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-plus-circle me-2"></i>Ödeme Tipi Ekle</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="name" class="form-label">Ödeme Tipi</label>
+          <input type="text" name="name" id="name" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-corporate">Ödeme Tipi Ekle</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

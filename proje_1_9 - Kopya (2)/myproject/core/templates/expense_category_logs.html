@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Kategori Logları{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Kategori Düzenleme ve Silme Logları</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Kategori Adı</th>
+                <th>İşlem</th>
+                <th>Yapan</th>
+                <th>Tarih</th>
+                <th>Detaylar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.category_name }}</td>
+                <td>{{ log.get_operation_display }}</td>
+                <td>{{ log.performed_by.username }}</td>
+                <td>{{ log.performed_at|date:"Y-m-d H:i" }}</td>
+                <td>{{ log.details }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Log kaydı bulunamadı.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

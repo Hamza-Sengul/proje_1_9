@@ -1,0 +1,20 @@
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="sidebarLabel">Yönetici Menüsü</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Kapat"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin_panel' %}">Panel</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'add_temsilci' %}">Temsilci Ekle</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Çıkış Yap</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  

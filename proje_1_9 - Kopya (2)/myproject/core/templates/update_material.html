@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Malzeme Güncelle{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-pencil-square me-2"></i>Malzeme Güncelle</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Malzeme Adı -->
+        <div class="mb-3">
+          <label class="form-label" for="id_name">Malzeme Adı</label>
+          <input
+            type="text"
+            id="id_name"
+            name="{{ form.name.html_name }}"
+            class="form-control"
+            placeholder="Malzeme adını giriniz"
+            value="{{ form.name.value|default_if_none:'' }}"
+          />
+          {% for error in form.name.errors %}
+            <div class="text-danger">{{ error }}</div>
+          {% endfor %}
+        </div>
+        
+        <!-- Fiyat -->
+        <div class="mb-3">
+          <label class="form-label" for="id_price">Fiyat</label>
+          <input
+            type="number"
+            step="0.01"
+            id="id_price"
+            name="{{ form.price.html_name }}"
+            class="form-control"
+            placeholder="Fiyat giriniz"
+            value="{{ form.price.value|default_if_none:'' }}"
+          />
+          {% for error in form.price.errors %}
+            <div class="text-danger">{{ error }}</div>
+          {% endfor %}
+        </div>
+        
+        <!-- Stok Adedi -->
+        <div class="mb-3">
+          <label class="form-label" for="id_quantity">Stok Adedi</label>
+          <input
+            type="number"
+            id="id_quantity"
+            name="{{ form.quantity.html_name }}"
+            class="form-control"
+            placeholder="Stok adedi"
+            value="{{ form.quantity.value|default_if_none:'' }}"
+          />
+          {% for error in form.quantity.errors %}
+            <div class="text-danger">{{ error }}</div>
+          {% endfor %}
+        </div>
+        
+        <!-- Verilebilir mi? (Checkbox) -->
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="id_available"
+            name="{{ form.available.html_name }}"
+            value="True"
+            {% if form.available.value == True or form.available.value == "True" %}checked{% endif %}
+          />
+          <label class="form-check-label" for="id_available">Verilebilir</label>
+          {% for error in form.available.errors %}
+            <div class="text-danger">{{ error }}</div>
+          {% endfor %}
+        </div>
+        
+        <button type="submit" class="btn btn-corporate">Güncelle</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

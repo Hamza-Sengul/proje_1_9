@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block title %}Çalışan Ekle{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2><i class="bi bi-person-plus me-2"></i>Çalışan Ekle</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="{{ form.username.id_for_label }}" class="form-label">Kullanıcı Adı</label>
+          {{ form.username|add_class:"form-control"|attr:"placeholder:Kullanıcı adını giriniz" }}
+          {% if form.username.errors %}
+            <div class="text-danger">{{ form.username.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="{{ form.first_name.id_for_label }}" class="form-label">Ad</label>
+          {{ form.first_name|add_class:"form-control"|attr:"placeholder:Adınızı giriniz" }}
+          {% if form.first_name.errors %}
+            <div class="text-danger">{{ form.first_name.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="{{ form.last_name.id_for_label }}" class="form-label">Soyad</label>
+          {{ form.last_name|add_class:"form-control"|attr:"placeholder:Soyadınızı giriniz" }}
+          {% if form.last_name.errors %}
+            <div class="text-danger">{{ form.last_name.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="{{ form.department.id_for_label }}" class="form-label">Departman</label>
+          {{ form.department|add_class:"form-control"|attr:"placeholder:Çalıştığı departmanı giriniz" }}
+          {% if form.department.errors %}
+            <div class="text-danger">{{ form.department.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="{{ form.salary.id_for_label }}" class="form-label">Maaş</label>
+          {{ form.salary|add_class:"form-control"|attr:"placeholder:Maaş bilgisini giriniz" }}
+          {% if form.salary.errors %}
+            <div class="text-danger">{{ form.salary.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="{{ form.password.id_for_label }}" class="form-label">Şifre</label>
+          {{ form.password|add_class:"form-control"|attr:"placeholder:Şifre giriniz" }}
+          {% if form.password.errors %}
+            <div class="text-danger">{{ form.password.errors }}</div>
+          {% endif %}
+        </div>
+        <button type="submit" class="btn btn-corporate">Çalışan Ekle</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
